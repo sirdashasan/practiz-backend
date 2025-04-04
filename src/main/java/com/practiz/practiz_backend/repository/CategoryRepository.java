@@ -1,0 +1,8 @@
+package com.practiz.practiz_backend.repository;
+
+import com.practiz.practiz_backend.entity.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategoryRepository extends JpaRepository<Category,Long> {
+
+}
