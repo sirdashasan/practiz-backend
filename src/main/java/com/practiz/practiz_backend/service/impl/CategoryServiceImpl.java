@@ -2,9 +2,11 @@ package com.practiz.practiz_backend.service.impl;
 
 import com.practiz.practiz_backend.dto.CategoryDto;
 import com.practiz.practiz_backend.entity.Category;
+import com.practiz.practiz_backend.exceptions.ApiException;
 import com.practiz.practiz_backend.mapper.CategoryMapper;
 import com.practiz.practiz_backend.repository.CategoryRepository;
 import com.practiz.practiz_backend.service.CategoryService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,12 +39,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto updateCategory(Long id, CategoryDto categoryDto) {
-        Optional<Category> optionalCategory = categoryRepository.findById(id);
-        if(optionalCategory.isEmpty()) {
-            throw new RuntimeException("Category not found with id: " + id);
-        }
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ApiException("Category not found with id: " + id, HttpStatus.NOT_FOUND));
 
-        Category category = optionalCategory.get();
         category.setName(categoryDto.getName());
 
         Category updated = categoryRepository.save(category);
@@ -53,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(Long id) {
         if (!categoryRepository.existsById(id)) {
-            throw new RuntimeException("Category not found with id: " + id);
+            throw new ApiException("Category not found with id: " + id, HttpStatus.NOT_FOUND);
         }
         categoryRepository.deleteById(id);
     }
