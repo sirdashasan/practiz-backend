@@ -1,5 +1,6 @@
 package com.practiz.practiz_backend.controller;
 
+import com.practiz.practiz_backend.dto.CategoryDto;
 import com.practiz.practiz_backend.entity.Category;
 import com.practiz.practiz_backend.service.CategoryService;
 import org.springframework.http.HttpStatus;
@@ -20,14 +21,25 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<List<CategoryDto>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category){
-        System.out.println("GELEN CATEGORY: " + category);
-        Category created = categoryService.createCategory(category);
+    public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto) {
+        CategoryDto created = categoryService.createCategory(categoryDto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long id, @RequestBody CategoryDto categoryDto) {
+        CategoryDto updated = categoryService.updateCategory(id, categoryDto);
+        return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+        categoryService.deleteCategory(id);
+        return ResponseEntity.noContent().build();
     }
 }
