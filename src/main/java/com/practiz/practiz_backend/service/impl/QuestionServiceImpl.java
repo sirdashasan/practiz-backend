@@ -9,11 +9,13 @@ import com.practiz.practiz_backend.repository.QuestionRepository;
 import com.practiz.practiz_backend.repository.SubCategoryRepository;
 import com.practiz.practiz_backend.service.QuestionService;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+@Service
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
