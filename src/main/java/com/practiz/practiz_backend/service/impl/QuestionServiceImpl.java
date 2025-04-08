@@ -24,10 +24,6 @@ public class QuestionServiceImpl implements QuestionService {
         this.subCategoryRepository = subCategoryRepository;
     }
 
-    public QuestionServiceImpl() {
-        super();
-    }
-
     @Override
     public List<QuestionDto> getAllQuestions() {
         return questionRepository.findAll().stream()
