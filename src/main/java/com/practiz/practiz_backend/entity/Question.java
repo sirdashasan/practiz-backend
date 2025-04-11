@@ -17,8 +17,10 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "question_text", length = 1000)
     private String questionText;
 
+    @Column(name = "answer_text", length = 2000)
     private String answerText;
 
     @ManyToOne
